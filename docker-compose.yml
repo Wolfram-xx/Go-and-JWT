@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: "Go_JWL"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "gerotyk"
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+  auth:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      DB_HOST: "localhost"
+      DB_PORT: 5432
+      DB_USER: user
+      DB_PASSWORD: "gerotyk"
+      DB_NAME: "Go_JWL"
+
+volumes:
+  pg_data:
